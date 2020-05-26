@@ -29,26 +29,33 @@ function logic(){
     //console.log(Math.random()*colors.length);
     //console.log(colors);
     //console.log("PC="+pickedColor);
+    console.log(document);
+    console.log(document.querySelector("#colorDisplay"));
+    document.querySelector("#colorDisplay").textContent=pickedColor;
     colorDisplay.textContent=pickedColor;
     for(var i=num;i<6;i++){
-        squares[i].style.background="#232323";
+        squares[i].style.backgroundColor="#232323";
         squares[i].style.display="none";
     }
 
     for(var i=0;i<num;i++){
-        squares[i].style.background=colors[i];
+        squares[i].style.display="block";
+        squares[i].style.backgroundColor=colors[i];
         //console.log("Yo"+colors[i]);
         squares[i].addEventListener("click",function(){
-            var clickedColor=this.style.background;
-            //console.log(clickedColor,pickedColor);
+            var clickedColor=this.style.backgroundColor;
+            console.log(clickedColor.substring(0,clickedColor.indexOf(")")+1));
             if(clickedColor===pickedColor){
                 changeColors(pickedColor);
                 msg.textContent="Correct";
+                setTimeout(function(){
+                    msg.textContent="";
+                },1000);
                 resestButton.textContent="Play Again";
                 h1.style.backgroundColor=pickedColor;
             }
             else{
-                this.style.background="#232323";
+                this.style.backgroundColor="#232323";
                 msg.textContent="Try Again";
                 setTimeout(function(){
                     msg.textContent="";
@@ -71,23 +78,14 @@ function getRandomColor(){
 }
 function changeColors(pickedColor){
     for(var i=0;i<colors.length;i++){
-        squares[i].style.background=pickedColor;
+        squares[i].style.backgroundColor=pickedColor;
     }
 }
 function resetGame(){
     resestButton.textContent="New Colors";
     colors=getRandomColors(num);
-    console.log("num="+num+" "+colors)
-    pickedColor=colors[Math.floor(Math.random()*colors.length)];
-    for(var i=0;i<num;i++){
-        console.log("i="+i);
-        squares[i].style.display="block";
-        squares[i].style.background=colors[i];
-    } 
-    for(var i=num;i<6;i++){
-        console.log("I="+i);
-        squares[i].style.background="#232323";
-        squares[i].style.display="none";
-    }  
+    console.log("num="+num+" "+colors);
+    pickedColor=colors[Math.floor(Math.random()*colors.length)];   
     h1.style.backgroundColor="steelblue";
+    logic();
 }
